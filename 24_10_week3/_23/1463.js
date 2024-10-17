@@ -14,6 +14,26 @@ const readInput = (addr) => {
 const ip = readInput("1463.txt");
 let op = "";
 
+/** 풀이 */
+// 1부터 x까지의 연산 최소화
+// 부분합을 이용, 연산의 최솟값
+// X는 최대 10^6이므로 바텀업 - tabulation
+const N = Number(ip);
+const dp = Array(N + 1).fill(0);
+dp[2] = 1;
+dp[3] = 1;
+
+for (let i = 4; i <= N; i++) {
+  // -1 하는 경우 => 이전 값의 경우의 수 +1
+  dp[i] = dp[i - 1] + 1;
+  // 3으로 나눠지는 경우 => 3으로 나눈 값의 경우의 수 + 1
+  if (i % 3 == 0) dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+  // 2으로 나눠지는 경우 => 2으로 나눈 값의 경우의 수 + 1
+  if (i % 2 == 0) dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+}
+console.log(dp[N]);
+
+/* 메모리 초과
 const N = Number(ip);
 let cnt = 0;
 let dp = [[N]];
@@ -35,3 +55,4 @@ for (let i = 0; i < dp.length; i++) {
   dp[cnt] = [...arr];
 }
 console.log(`${cnt}`);
+*/
