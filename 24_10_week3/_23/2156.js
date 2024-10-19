@@ -12,3 +12,13 @@ const readInput = (addr) => {
 };
 
 const ip = readInput("2156.txt");
+const [N, ...wines] = ip.split("\n").map(Number);
+const dp = Array(N).fill(0);
+dp[0] = wines[0];
+dp[1] = Math.max(wines[0] + wines[1], wines[1]);
+dp[2] = Math.max(wines[0] + wines[2], wines[2]);
+
+for (let i = 3; i < N; i++) {
+  dp[i] = Math.max(wines[i] + wines[i - 1] + dp[i - 3], wines[i] + dp[i - 2]);
+}
+console.log(Math.max(...dp));
