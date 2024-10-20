@@ -12,3 +12,19 @@ const readInput = (addr) => {
 };
 
 const ip = readInput("11053.txt");
+
+let [N, arr] = ip.split("\n");
+N = Number(N);
+arr = arr.split(" ").map(Number);
+
+const dp = Array(N).fill(0);
+for (let i = 0; i < N - 1; i++) {
+  for (let j = i + 1; j < N; j++) {
+    if (arr[i] < arr[j]) {
+      console.log(`(j) = ${j}, (arr[j]) = ${arr[j]}`);
+      dp[j]++;
+    }
+  }
+  console.log(`(${i}) = ${dp[i]}`);
+  console.log(dp);
+}
