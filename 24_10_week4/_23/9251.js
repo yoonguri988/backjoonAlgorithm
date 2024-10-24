@@ -14,21 +14,18 @@ const readInput = (addr) => {
 const ip = readInput("9251.txt");
 const [strA, strB] = ip.split("\r\n");
 
-const N = Math.max(strA.length, strB.length);
-const dp = Array(N).fill(0);
+const [M, N] = [strA.length, strB.length];
+const dp = Array.from(Array(M + 1), () => Array(N + 1).fill(0));
 
-for (let i = 0; i < N; i++) {
-  let max = 0;
-  // console.log(`strA: ${strA[i]}`);
-  for (let j = 0; j < N; j++) {
-    if (strA[i] == strB[j]) {
-      // console.log(`▼ strB: ${strB[j]} max: ${max}`);
-      max = Math.max(max, dp[j] + 1);
-      // console.log(`▼ dp: ${dp[j]} max: ${max}`);
+for (let i = 0; i <= M; i++) {
+  for (let j = 0; j <= N; j++) {
+    if (i == 0 || j == 0) {
+      dp[i][j] = 0;
+    } else if (strA[i - 1] == strB[j - 1]) {
+      dp[i][j] = dp[i - 1][j - 1] + 1;
+    } else {
+      dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
     }
-    dp[i] = max;
   }
-  // console.log(`== dp(${i}): ${dp[i]}`);
 }
-// console.log(`${dp.join("|")}`);
-console.log(`${Math.max(...dp)}`);
+console.log(`${dp[M][N]}`);
