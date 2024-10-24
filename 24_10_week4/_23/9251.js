@@ -11,4 +11,4 @@ const readInput = (addr) => {
   }
 };
 
-const ip = readInput("2565.txt");
+const ip = readInput("9251.txt");
