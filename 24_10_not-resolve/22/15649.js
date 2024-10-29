@@ -11,7 +11,26 @@ function inputTextFile(addr) {
 }
 
 const inputData = inputTextFile("15649.txt");
-const outputData = solution();
-// console.log(outputData);
+let outputData = "";
+// 1부터 N까지의 자연수 중 중복없이 M개를 고른 수열
+const [N, M] = inputData.split(" ").map(Number);
+// DFS
+const nrr = Array(M).fill(0);
+const visited = Array(N).fill(false);
+dfs(0);
 
-function solution() {}
+function dfs(n) {
+  if (n == M) {
+    return (outputData += `${nrr.join(" ")}\n`);
+  }
+
+  for (let i = 1; i <= N; i++) {
+    if (!visited[i]) {
+      nrr[n] = i;
+      visited[i] = true;
+      dfs(n + 1);
+      visited[i] = false;
+    }
+  }
+}
+console.log(outputData);
