@@ -11,6 +11,15 @@ function readTextFile(addr) {
 }
 
 let iData = readTextFile("9461.txt");
+const [T, ...NARR] = iData.split("\r\n").map(Number);
+const N = Math.max(...NARR);
 
-console.log(`-- test --`);
-console.log(iData);
+let dp = Array(N + 1).fill(1);
+let result = "";
+for (let k of NARR) {
+  for (let i = 4; i <= k; i++) {
+    dp[i] = dp[i - 2] + dp[i - 3];
+  }
+  result += `${dp[k]}\n`;
+}
+console.log(result);
