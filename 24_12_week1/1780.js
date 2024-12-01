@@ -28,7 +28,6 @@ const PAPERS = [...data].map((v) => v.split(" ").map(Number));
 let result = { "-1": 0, 0: 0, 1: 0 };
 
 function dfs(x, y, n) {
-  if (n < 1) return;
   let cnt = 0;
   let mcnt = 0;
   for (let i = x; i < x + n; i++) {
@@ -37,7 +36,6 @@ function dfs(x, y, n) {
       else if (PAPERS[i][j] === -1) mcnt++;
     }
   }
-  // console.log(`${n}:=${cnt !== n * n}, ${mcnt === n * n}\n`);
 
   let max = n * n;
   if (!cnt && !mcnt) {
@@ -47,18 +45,10 @@ function dfs(x, y, n) {
   } else if (mcnt === max) {
     result["-1"]++;
   } else {
-    // 같은 크기로 9분할
-    if (n === 3) {
-      for (let i = x; i < x + n; i++) {
-        for (let j = y; j < y + n; j++) {
-          result[PAPERS[i][j]]++;
-        }
-      }
-    } else {
-      for (let i = 0; i < n / 3; i++) {
-        for (let j = 0; j < n / 3; j++) {
-          dfs(x + i * (n / 3), y + j * (n / 3), n / 3);
-        }
+    n /= 3;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        dfs(x + i * n, y + j * n, n);
       }
     }
   }
